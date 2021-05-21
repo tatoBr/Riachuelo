@@ -1,0 +1,16 @@
+<nav class="justify-content-between navbar navbar-expand navbar-light bg-light">
+  <a class="navbar-brand" routerLink='/'>Bookfinder</a>
+  <div class="" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">     
+      <li class="nav-item active" *ngIf="!isAuthenticated">
+        <a class="nav-link" routerLink="/login"  style="font-size: 12pt;">Login</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/subscribe"  style="font-size: 12pt;" *ngIf="!isAuthenticated">Subscribe</a>
+      </li>      
+      <li class="nav-item active">
+        <button class="btn btn-primary" (click)="logout()" *ngIf="isAuthenticated">Sair</button>
+      </li>      
+    </ul>
+  </div>
+</nav>

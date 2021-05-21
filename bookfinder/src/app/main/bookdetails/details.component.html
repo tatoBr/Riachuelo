@@ -1,0 +1,18 @@
+<section>
+    <img src="{{book.imageURL}}" alt="book image large">
+    <div>
+        <h3>{{ book.title }}</h3>
+        <div>
+            <h4>Autor(es)</h4>
+            <span *ngFor="let author of book.authors">{{ author }}</span>
+        </div>
+        <div>
+            <h4>Publicado por: {{ book.publisher }}</h4>
+            <h4>Data de publicação: {{ book.publishedDate || "sem data"}}</h4>
+        </div>
+        <p>Descrição: {{ book.description }}</p>
+        <p>paginas: {{ book.pageCount }}</p>              
+    </div>
+    <button class="btn btn-primary" (click)="onReturn()">Voltar</button>
+    <button class="btn btn-primary" *ngIf='isAuthenticated' (click)="onFavorite()">Favoritar</button>
+</section>
