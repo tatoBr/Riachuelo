@@ -35,7 +35,8 @@ exports.get = async( req, res, next ) => {
 exports.setAsFavorite = async( req, res, next ) => {
     try {
         let { bookId } = req.params;
-        let user = await userServices.Model.findByIdAndUpdate( req.user.id,{ $addToSet: { favoriteBooks: bookId }});
+        await userServices.Model.findByIdAndUpdate( req.user.id,{ $addToSet: { favoriteBooks: bookId }});
+        let user = await userServices.Model.findById( req.user.id );
         res.status( 202 ).json({ message: 'added to favorite', content: user.favoriteBooks })            
     } catch ( error ) {
         next( error );
@@ -46,8 +47,8 @@ exports.removeFromFavorite = async( req, res, next )=>{
     try {
         let { bookId } = req.params;
         await userServices.Model.findByIdAndUpdate( req.user.id, { $pull: { favoriteBooks: bookId }});
-        let user = await userServices.findById( req.user.id)
-        return res.status( 202 ).json({ message: 'removed to favorite', content: user.favoriteBooks })            
+        let user = await userServices.Model.findById( req.user.id)
+        return res.status( 202 ).json({ message: 'removed to favorite', content: user?.favoriteBooks })            
     } catch ( error ) {
         next( error );
     }
