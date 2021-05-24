@@ -1,3 +1,4 @@
+const { findById } = require('../models/user');
 const Services = require('../services/books');
 const UserServices = require( '../services/user')
 
@@ -44,7 +45,8 @@ exports.setAsFavorite = async( req, res, next ) => {
 exports.removeFromFavorite = async( req, res, next )=>{
     try {
         let { bookId } = req.params;
-        let user = await userServices.Model.findByIdAndUpdate( req.user.id, { $pull: { favoriteBooks: bookId }});
+        await userServices.Model.findByIdAndUpdate( req.user.id, { $pull: { favoriteBooks: bookId }});
+        let user = await userServices.findById( req.user.id)
         res.status( 202 ).json({ message: 'removed to favorite', content: user.favoriteBooks })            
     } catch ( error ) {
         next( error );
