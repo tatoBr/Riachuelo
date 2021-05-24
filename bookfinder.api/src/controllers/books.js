@@ -47,12 +47,10 @@ exports.removeFromFavorite = async( req, res, next )=>{
         let { bookId } = req.params;
         await userServices.Model.findByIdAndUpdate( req.user.id, { $pull: { favoriteBooks: bookId }});
         let user = await userServices.findById( req.user.id)
-        res.status( 202 ).json({ message: 'removed to favorite', content: user.favoriteBooks })            
+        return res.status( 202 ).json({ message: 'removed to favorite', content: user.favoriteBooks })            
     } catch ( error ) {
         next( error );
     }
-    let { bookId } = req.params;
-    res.status( 202 ).json({ message: 'book was removed from favorite', content: user.favoriteBooks })
 }
 
 exports.getFavorites = async( req, res, next ) => {
