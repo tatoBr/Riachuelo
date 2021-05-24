@@ -27,15 +27,16 @@ router.post(
 );
 
 router.get(
-    '/',
-    controller.get
-);
-
-router.get(
     '/:id',
     passport.authenticate( 'jwt', { session: false }),
     controller.getById
 );  
+
+router.get(
+    '/',
+    controller.get
+);
+
 
 router.patch(
     '/:id',

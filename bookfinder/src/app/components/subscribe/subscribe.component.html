@@ -1,0 +1,93 @@
+<section style="margin: 1rem;">
+    <p
+        *ngIf='error && !loading'
+        class="alert alert-danger"
+    >
+        {{ error }}
+    </p>
+    <form
+        *ngIf="!loading"
+        class="form-control justify-content-center"
+        (ngSubmit)="onSubmit(form)"
+        #form="ngForm"
+    >
+        <h2>Sing Up</h2>
+        <hr>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input
+                class="form-control"
+                type="text"
+                id="username"
+                name="username"
+                required
+                ngModel
+                #username="ngModel"
+            >
+            <p
+                class="alert alert-warning"
+                style="padding: 4px; font-size: 10pt;"
+                *ngIf="!username.valid && username.touched"
+            >
+                Please, enter a valid username.
+            </p>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input
+                class="form-control"
+                type="email"
+                id="email"
+                name="email"
+                required
+                email
+                ngModel
+                #email="ngModel"
+            >
+            <p
+                class="alert alert-warning"
+                style="padding: 4px; font-size: 10pt;"
+                *ngIf="!email.valid && email.touched"
+            >
+                Please, enter a valid email.
+            </p>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input
+                class="form-control"
+                type="password"
+                id="password"
+                name="password"
+                required
+                ngModel
+                #password="ngModel"
+            >
+            <p
+                class="alert alert-warning"
+                style="padding: 4px; font-size: 10pt;"
+                *ngIf="!password.valid && password.touched"
+            >
+                Please, enter a valid password.
+            </p>
+        </div>
+        <button
+            class="btn btn-primary"
+            type="submit"
+            [disabled]="!form.valid"
+        >
+            Sign up
+        </button>
+        <p style="font-size: 11pt;">
+            Already have an account?
+            <a routerLink="/login">Click here</a>
+            to login.
+        </p>
+    </form>
+    <div
+        *ngIf="loading"
+        style="text-align: center; height: max-content;"
+    >
+        <app-loading></app-loading>
+    </div>
+</section>

@@ -7,20 +7,28 @@ class BooKServices{
     }
     constructor(){};
     getAllBooks = async ( query )=> {
-        if( !query ) return [];
-        let fetchURL = `${ this.ROOT_URL }${ query }`;       
+        if( !query ) return [];       
         
         try {
-            let response = await fetch( fetchURL,{
-                method: 'GET',
-                header: this.headers
-            });
-            let data = await response.json();
+            let startIndex = 0;
+            let books = []
+            let data;
+            do{
+                let fetchURL = `${ this.ROOT_URL }${ query }&startIndex=${ startIndex }`;       
+                let response = await fetch( fetchURL,{
+                    method: 'GET',
+                    header: this.headers
+                });
+                data = await response.json();   
                 
-            if( !data.items || !Array.isArray( data.items ))
-                return[]
-
-            return data.items.map( mapper );    
+                if( !data.items || !Array.isArray( data.items ))
+                    break;
+                
+                books = [...books, ...data.items]
+                startIndex+=40;
+                
+            }while( startIndex < 120 )
+            return books.map( mapper );   
             
         } catch (error) {
             throw error;
@@ -33,6 +41,10 @@ class BooKServices{
         try {
             let response = await fetch( fetchURL );            
             let data = await response.json();
+            if( data?.error ){                                
+                return undefined
+            }
+
             return mapper( data );
 
         } catch (error) {

@@ -31,6 +31,7 @@ module.exports = class UserController extends Controller {
             let token = jwt.sign( payload, secret, { expiresIn: '1h' });
             res.set('Authorization', token );
             res.set('Access-Control-Expose-Headers', 'Authorization')
+            content.token = token;
             return res.status( status ).json({ message, content });
         } catch ( error ) {
             next( error );
@@ -50,6 +51,7 @@ module.exports = class UserController extends Controller {
     };
 
     signIn = async (req, res, next) => {
+        console.log( 'signIn route reached')
         try {
             const { email, password } = req.body;
 
@@ -68,6 +70,7 @@ module.exports = class UserController extends Controller {
             
             res.set('Authorization', token );
             res.set('Access-Control-Expose-Headers', 'Authorization')
+            content.token = token;
             return res.status(status).json({ message, content });
         } catch (error) {
             next( error );

@@ -6,18 +6,20 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { MainComponent } from './main/main.component';
-import { LoginComponent } from './main/login/login.component';
-import { BooklistComponent } from './main/booklist/booklist.component';
-import { BookDetailsComponent as BookDetailsComponent } from './main/bookdetails/details.component';
-import { BookcardComponent } from './main/booklist/bookcard/bookcard.component';
-import { SubscribeComponent } from './main/subscribe/subscribe.component';
-import { HomeComponent } from './main/home/home.component';
+import { HeaderComponent } from './components/header/header.component';
+import { HomeComponent } from './components/home/home.component';
+import { UserProfileComponent } from './components/user-profile/user-profile.component';
+import { SubscribeComponent } from './components/subscribe/subscribe.component';
+import { LoginComponent } from './components/login/login.component';
+import { FavoriteCardComponent } from './components/user-profile/favorite-card/favorite-card.component';
+import { BooklistComponent } from './components/booklist/booklist.component';
+import { BookDetailsComponent } from './components/booklist/bookdetails/bookdetails.component';
+import { BookcardComponent } from './components/booklist/bookcard/bookcard.component';
+import { LoadingComponent } from './components/shared/loading/loading.component'
 
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
-import { AuthGuardService } from './auth/auth-guard.service';
 import { LoggedGuardService } from './auth/logged-guard.service'
+import { AuthGuardService  } from './auth/auth-guard.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -25,18 +27,21 @@ const routes: Routes = [
   { path: 'subscribe', component: SubscribeComponent, canActivate: [LoggedGuardService]  },
   { path: 'books', component: BooklistComponent },
   { path: 'books/:id', component: BookDetailsComponent },
+  { path: 'profile', component: UserProfileComponent, canActivate: [ AuthGuardService ] }
 ]
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    MainComponent,
     LoginComponent,
     BooklistComponent,
     BookDetailsComponent,
     BookcardComponent,
     SubscribeComponent,
-    HomeComponent
+    HomeComponent,
+    LoadingComponent,
+    UserProfileComponent,
+    FavoriteCardComponent
   ],
   imports: [
     BrowserModule,

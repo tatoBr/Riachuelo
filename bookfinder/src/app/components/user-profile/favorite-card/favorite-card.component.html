@@ -1,0 +1,70 @@
+<div class="
+        card
+        mt-5
+        border-5
+        pt-2
+        active
+        pb-0
+        px-3
+        d-flex
+        justify-content-center
+        flex-lg-row
+        flex-sm-column">
+    <div class="container-fluid">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 ">
+                    <h4 class="card-title ">
+                        <b>{{ book.title }}</b>
+                    </h4>
+                </div>
+                <div class="col">
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        <p class="card-text text-muted small ">
+                            <span class="vl mr-2 ml-0"></span>
+                            Author: {{ book.authors }}. |
+                            <span class="font-weight-bold">Published by {{ book.publisher }} |</span>
+                            <span class="font-weight-bold">Date: {{ book.publishedDate }}</span>
+                        </p>
+                    </h6>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer bg-white px-0 ">
+            <div class="row">
+                <div class=" col-md-auto ">
+                    <a                        
+                        class="btn btn-outlined btn-black text-muted bg-transparent"
+                        data-wow-delay="0.7s"
+                        (click)="removeFavorite()"
+                    >
+                        <small>UNFAVORITE</small>
+                    </a>
+                    <a
+                        href="#"
+                        class="btn btn-outlined btn-black text-muted bg-transparent"
+                        data-wow-delay="0.7s"
+                        routerLink="/books/{{ id }}"
+                    >
+                        <small>READ MORE</small>
+                        <img
+                            src="https://img.icons8.com/ios/50/000000/plus.png"
+                            width="30"
+                            height="30 "
+                            class="more"
+                            style="margin-left: 8pt;"
+                        >
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid" style="padding-bottom: 8pt; width: fit-content; margin: auto;">
+        <img
+            class="img-fluid"
+            src="{{book.imageURL}}"
+            style="max-height: 320px;"
+        >
+    </div>
+</div>

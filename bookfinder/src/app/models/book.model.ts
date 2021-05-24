@@ -1,17 +1,28 @@
-import { HttpClient, HttpRequest } from "@angular/common/http";
-
-
 export class Book {
     id: string;
     title: string;
-    authors: string[];
+    private _authorsArr: string[];
     imageURL: string;
     description: string;
     publishedDate: string;
     publisher: string;
     pageCount: number;
     language: string;
-    private static API_URL: string = "http://localhost:3000/api"
+
+    static mapBook( data: any ){
+      let id = data['id'];
+      let title = data['title'];
+      let authors = data['authors'];
+      let imageURL = data['imageURL'];
+      let description = data['description'];
+      let publishedDate = data['publishedDate'];
+      let publisher = data['publisher'];
+      let pageCount = data['pageCount'];
+      let language = data['language'];
+
+      return new Book( id, title, authors, imageURL, description, publishedDate, publisher, pageCount, language );
+    }
+
     constructor(
         id: string,
         title: string,
@@ -25,7 +36,7 @@ export class Book {
     ) {
         this.id = id;
         this.title = title;
-        this.authors = authors;
+        this._authorsArr = authors;
         this.imageURL = imageURL;
         this.description = description;
         this.publishedDate = publishedDate;
@@ -34,36 +45,18 @@ export class Book {
         this.language = language;
     }
 
-    static sendGetBooksRequest() {
+    get authors(){
+      if( !this._authorsArr || !Array.isArray( this._authorsArr ))
+        return '';
+
+      let authorsStr: string = ''
+      let lastIndex = this._authorsArr.length - 1;
+      for( let idx = 0; idx < this._authorsArr.length; idx++ ){
+        let author = this._authorsArr[idx];
+        authorsStr += idx !== lastIndex ? `${ author }, `:`${ author }.`
+      }
+      return authorsStr;
     }
-    static async getBooks(
-        httpClient: HttpClient,
-        keyword?: string,
-        startIndex: number = 0,
-        maxResults: number = 10
-    ) {
-        let fetchUrl = `${this.API_URL}/books`;
-        let headers = { 'Content-Type': 'application/json' };
-        let body = { keyword, startIndex, maxResults };
-        let getBooksrequest = new HttpRequest('GET', fetchUrl, { body: body });
-        try {
-            let data = await httpClient.request<any>(getBooksrequest).toPromise();
-            console.log('data', data)
-            let books: Book[] = []
-            // for (let d of data) {
-            //     console.log(d)
-            //     let { id, title, authors, description, imageUrl,
-            //         publishedDate, publisher, pageCount, language
-            //     } = d
-            //     books.push(new Book(
-            //         id, title, authors, imageUrl, description,
-            //         publishedDate, publisher, pageCount, language
-            //     ));
-            // }
-            return books;
-        } catch (error) {
-            console.log('error', error)
-            return []
-        }
-    }
+
+    
 }

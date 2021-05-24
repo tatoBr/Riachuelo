@@ -6,9 +6,9 @@ const userServices = new UserServices();
 
 exports.getAll = async( req, res, next ) => {
     try {               
-        const q = req.query.q || '.';
+        const q = req.query.q;
         const page = req.query.page || 0;
-        const maxResults = 10;
+        const maxResults = 40;
         const startIndex = page * maxResults;
 
         let queryParams = `?q=${ q }&maxResults=${ maxResults }&startIndex=${ startIndex }`;        
@@ -23,6 +23,8 @@ exports.get = async( req, res, next ) => {
     let { id } = req.params;
     try {
         let book = await services.getBookById( id )
+        if( !book )
+            return res.status( 404 ).json({})
         res.json( book );
     } catch (error) {
         next( error );
@@ -32,15 +34,23 @@ exports.get = async( req, res, next ) => {
 exports.setAsFavorite = async( req, res, next ) => {
     try {
         let { bookId } = req.params;
-        let user = await userServices.Model.findById( req.user.id );
-        if( !user.favoriteBooks.includes( bookId )){
-            user.favoriteBooks.push( bookId );        
-            await user.save();
-        }
-        res.json( user );                
-    } catch (error) {
+        let user = await userServices.Model.findByIdAndUpdate( req.user.id,{ $addToSet: { favoriteBooks: bookId }});
+        res.status( 202 ).json({ message: 'added to favorite', content: user.favoriteBooks })            
+    } catch ( error ) {
         next( error );
     }
+}
+
+exports.removeFromFavorite = async( req, res, next )=>{
+    try {
+        let { bookId } = req.params;
+        let user = await userServices.Model.findByIdAndUpdate( req.user.id, { $pull: { favoriteBooks: bookId }});
+        res.status( 202 ).json({ message: 'removed to favorite', content: user.favoriteBooks })            
+    } catch ( error ) {
+        next( error );
+    }
+    let { bookId } = req.params;
+    res.status( 202 ).json({ message: 'book was removed from favorite', content: user.favoriteBooks })
 }
 
 exports.getFavorites = async( req, res, next ) => {

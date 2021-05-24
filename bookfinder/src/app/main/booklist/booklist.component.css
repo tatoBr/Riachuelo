@@ -1,6 +1,0 @@
-p.description{
-    max-height: 240px;   
-    overflow: hidden;
-    text-overflow: ellipsis; 
-    font-size: 0.5rem;
-}

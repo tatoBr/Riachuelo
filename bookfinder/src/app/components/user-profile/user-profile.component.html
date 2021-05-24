@@ -1,0 +1,48 @@
+<div
+    class="flex-container align-items-center"
+    style="margin-top: 8pt;"
+>
+    <div class="row justify-content-center">
+        <div class="flex-fill">
+            <div
+                class="section_heading text-center wow fadeInUp"
+                data-wow-delay="0.2s"               
+            >
+                <h3>Welcome <span>{{ username }}</span>
+                </h3>
+                <p *ngIf="favorites.length > 0">
+                    See your list of favorite books bellow:
+                </p>
+                <div class="line"></div>
+            </div>
+
+        </div>
+    </div>
+    <div
+        *ngIf="loading"
+        class="flex-row d-flex justify-content-center align-items-center"
+    >
+        <app-loading></app-loading>
+    </div>
+    <div
+        *ngIf="!loading && favorites.length <= 0"
+        class="flex-row d-flex justify-content-center align-items-center"
+    >
+        <p>You have no favorite books</p>
+    </div>
+    <div
+        *ngIf="!loading && favorites.length > 0"
+        class="flex-row justify-content-center align-items-center"
+    >
+        <app-favorite-card
+            (onUnfavorite)="removeFromList($event)"
+            *ngFor="let book of favorites; index as i"
+            [book]=book
+            class="container col-12"
+        ></app-favorite-card>
+    </div>
+    
+    <div  class="flex-fill">
+        <app-home style="margin-top: 22pt;"></app-home>
+    </div>
+</div>

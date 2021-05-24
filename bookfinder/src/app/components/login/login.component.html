@@ -1,0 +1,77 @@
+<section style="margin: 1rem;">
+    <div
+        *ngIf="!!error"
+        class="alert alert-danger"
+        style="font-size: 12pt; padding: 2pt;"
+    >
+        <p>{{ error }}</p>
+    </div>
+    <form
+        *ngIf="!loading"
+        class="form-control justify-content-center"
+        (ngSubmit)="onSubmit(form)"
+        #form="ngForm"
+    >
+        <h2>Sing In</h2>
+        <hr>
+        <div class="form-group">
+            <label for="email">email Adress:</label>
+            <input
+                class="form-control"
+                type="text"
+                id="email"
+                name="email"
+                required
+                email
+                ngModel
+                #email="ngModel"
+            >
+            <p
+                class="alert alert-warning"
+                style="padding: 4px; font-size: 10pt; margin-bottom: 2pt;"
+                *ngIf="!email.valid && email.touched"
+            >
+                Please, enter a valid email.
+            </p>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input
+                class="form-control"
+                type="password"
+                id="password"
+                name="password"
+                required
+                minlength="8"
+                ngModel
+                #password="ngModel"
+            >
+            <p
+                class="alert alert-warning"
+                style="padding: 4px; font-size: 10pt; margin-bottom: 2pt;"
+                *ngIf="!password.valid && password  .touched"
+            >
+                Please, enter a valid password.
+            </p>
+        </div>
+        <button
+            class="btn btn-primary"
+            type="submit"
+            [disabled]="!form.valid"
+            style="margin-top: 0.5rem;"
+        >
+            Sign In
+        </button>
+        <p style="font-size: 11pt; margin-top: 0.5  rem;">
+            or,
+            <a routerLink="/subscribe">click here</a>
+            and create an account
+        </p>
+    </form>
+    <div
+        *ngIf="loading"
+        style="text-align: center; height: max-content;"
+    >
+        <app-loading></app-loading>
+    </div>
+</section>

@@ -1,0 +1,80 @@
+<!-- Section: Block Content -->
+<section
+    class="mb-5"
+    *ngIf="!!book"
+>
+    <div class="row">
+        <div class="col-md-6 mb-4 mb-md-0">
+            <div id="mdb-lightbox-ui"></div>
+            <div class="mdb-lightbox">
+                <div class="row product-gallery mx-1">
+                    <div class="col-12 mb-0">
+                        <img
+                            src="{{ book.imageURL }}"
+                            class="img-fluid"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h5>{{ book.title }}</h5>
+            <p class="mb-2 text-muted text-uppercase small">{{ book.authors }}</p>
+            <p>
+                <span class="mr-1">Description</span>
+            </p>
+            <p class="pt-1">{{ book.description }}</p>
+            <div class="table-responsive">
+                <table class="table table-sm table-borderless mb-0">
+                    <tbody>
+                        <tr>
+                            <th
+                                class="pl-0 w-50"
+                                scope="row"
+                            >
+                                <strong>Publisher</strong>
+                            </th>
+                            <td>{{ book.publisher }}</td>
+                        </tr>
+                        <tr>
+                            <th
+                                class="pl-0 w-50"
+                                scope="row"
+                            >
+                                <strong>Year</strong>
+                            </th>
+                            <td>{{ book.publishedDate }}</td>
+                        </tr>
+                        <tr>
+                            <th
+                                class="pl-0 w-50"
+                                scope="row"
+                            >
+                                <strong>Page Count</strong>
+                            </th>
+                            <td>{{ book.pageCount }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+            <button
+                type="button"
+                class="btn btn-dark btn-md mr-1 mb-2"
+                (click)="goBackToBookList()"
+            >
+                Back
+            </button>
+            <button
+                *ngIf="isLogged"
+                class="btn btn-light btn-md mr-1 mb-2"
+                type="button"
+                (click)="setBookAsFavorite()" 
+                [disabled]="loading"               
+            >
+              {{ isFavorite ? 'Remove from favorites' : 'Add to favorites'}}
+            </button>
+        </div>
+    </div>
+</section>
+<!-- Section: Block Content -->
